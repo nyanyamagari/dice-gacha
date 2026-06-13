@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>走れ宵波ガチャ</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #f7d84e, #f4a833);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 36px;
+      letter-spacing: 2px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 32px;
+      width: 100%;
+      max-width: 560px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* 回数選択 */
+    .count-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .count-section label {
+      font-size: 0.9rem;
+      color: #ccc;
+      white-space: nowrap;
+    }
+
+    .count-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .count-btn {
+      padding: 8px 18px;
+      border-radius: 30px;
+      border: 1.5px solid rgba(247,216,78,0.4);
+      background: transparent;
+      color: #f7d84e;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .count-btn:hover { background: rgba(247,216,78,0.15); }
+    .count-btn.active {
+      background: #f7d84e;
+      color: #1a1a2e;
+      border-color: #f7d84e;
+    }
+
+    .custom-input {
+      width: 70px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .custom-input:focus { outline: none; border-color: #f7d84e; }
+
+    /* ガチャボタン */
+    .gacha-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(90deg, #f7d84e, #f4a833);
+      color: #1a1a2e;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(247,216,78,0.3);
+    }
+
+    .gacha-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(247,216,78,0.5);
+    }
+
+    .gacha-btn:active { transform: translateY(0); }
+    .gacha-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* トータル表示 */
+    .total-section {
+      margin-top: 28px;
+      display: none;
+    }
+
+    .total-box {
+      background: linear-gradient(135deg, rgba(247,216,78,0.12), rgba(244,168,51,0.08));
+      border: 1px solid rgba(247,216,78,0.3);
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .total-label { font-size: 0.85rem; color: #ccc; }
+    .total-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #f7d84e;
+    }
+    .total-count { font-size: 0.8rem; color: #888; }
+
+    /* 内訳 */
+    .breakdown {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .breakdown-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+
+    .coin-label { font-size: 1.1rem; font-weight: 700; }
+    .coin-count { font-size: 0.8rem; color: #aaa; margin-top: 2px; }
+    .coin-sum { font-size: 0.9rem; color: #f7d84e; margin-top: 4px; font-weight: 600; }
+
+    /* 結果リスト */
+    .results-label {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .results-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .results-grid::-webkit-scrollbar { width: 4px; }
+    .results-grid::-webkit-scrollbar-track { background: transparent; }
+    .results-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+    .result-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .c1   { background: #3a3a3a; color: #bbb; }
+    .c5   { background: #2d4a2d; color: #7ecb7e; }
+    .c10  { background: #2a3d5c; color: #7ab0e8; }
+    .c50  { background: #4a2d5c; color: #c07ee8; }
+    .c100 { background: #5c3a2a; color: #e8a07a; }
+    .c500 { background: #5c4a1a; color: #f7d84e; }
+
+    .reset-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #aaa;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .reset-btn:hover { border-color: #fff; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <h1>HASHIRE YOINAMI GACHA</h1>
+  <p class="subtitle">予算ダイスをまとめて引けるよ！♡<br>1/5/10/30回または任意の回数で引けるよ<br>ガチャを引くごとにトータルとその回の内訳が見れるよ</p>
+
+  <div class="card">
+    <div class="count-section">
+      <label>回数：</label>
+      <div class="count-buttons">
+        <button class="count-btn active" data-count="1">1回</button>
+        <button class="count-btn" data-count="5">5回</button>
+        <button class="count-btn" data-count="10">10回</button>
+        <button class="count-btn" data-count="30">30回</button>
+      </div>
+      <input class="custom-input" type="number" id="customCount" min="1" max="1000" placeholder="任意">
+    </div>
+
+    <button class="gacha-btn" id="gachaBtn">ガチャを引く</button>
+
+    <div class="total-section" id="totalSection">
+      <div class="total-box">
+        <div>
+          <div class="total-label">トータル獲得</div>
+          <div class="total-count" id="totalCount"></div>
+        </div>
+        <div class="total-value" id="totalValue"></div>
+      </div>
+
+      <div class="results-label" id="breakdownLabel">🎯 今回の内訳</div>
+      <div class="breakdown" id="breakdown"></div>
+
+      <div class="results-label">📋 結果一覧</div>
+      <div class="results-grid" id="resultsGrid"></div>
+
+      <button class="reset-btn" id="resetBtn">リセット</button>
+    </div>
+  </div>
+
+<script>
+  const COINS = [1, 5, 10, 50, 100, 500];
+  const COLOR_MAP = { 1:'c1', 5:'c5', 10:'c10', 50:'c50', 100:'c100', 500:'c500' };
+
+  let selectedCount = 1;
+  let allResults = [];
+
+  // 回数ボタン
+  document.querySelectorAll('.count-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedCount = parseInt(btn.dataset.count);
+      document.getElementById('customCount').value = '';
+    });
+  });
+
+  document.getElementById('customCount').addEventListener('input', function() {
+    const v = parseInt(this.value);
+    if (v > 0) {
+      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+      selectedCount = v;
+    }
+  });
+
+  // ガチャ実行
+  document.getElementById('gachaBtn').addEventListener('click', () => {
+    const count = parseInt(document.getElementById('customCount').value) || selectedCount;
+    if (!count || count < 1) return;
+
+    const btn = document.getElementById('gachaBtn');
+    btn.disabled = true;
+
+    const newResults = Array.from({length: count}, () => COINS[Math.floor(Math.random() * COINS.length)]);
+    allResults = allResults.concat(newResults);
+
+    renderResults(newResults);
+
+    setTimeout(() => { btn.disabled = false; }, 300);
+  });
+
+  // リセット
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    allResults = [];
+    document.getElementById('totalSection').style.display = 'none';
+    document.getElementById('resultsGrid').innerHTML = '';
+  });
+
+  function renderResults(newResults) {
+    const section = document.getElementById('totalSection');
+    section.style.display = 'block';
+
+    // トータル
+    const total = allResults.reduce((a, b) => a + b, 0);
+    document.getElementById('totalValue').textContent = total.toLocaleString() + ' 円';
+    document.getElementById('totalCount').textContent = `累計 ${allResults.length} 回`;
+
+    // 今回の内訳
+    const counts = {};
+    COINS.forEach(c => counts[c] = 0);
+    newResults.forEach(v => counts[v]++);
+
+    const bd = document.getElementById('breakdown');
+    bd.innerHTML = COINS.map(c => `
+      <div class="breakdown-item">
+        <div class="coin-label">${c}円</div>
+        <div class="coin-count">${counts[c]}回</div>
+        <div class="coin-sum">${(counts[c] * c).toLocaleString()}円</div>
+      </div>
+    `).join('');
+
+    // 結果チップ（新しい分だけ追加）
+    const grid = document.getElementById('resultsGrid');
+    newResults.forEach((v, i) => {
+      const chip = document.createElement('span');
+      chip.className = `result-chip ${COLOR_MAP[v]}`;
+      chip.textContent = `${v}円`;
+      chip.style.animationDelay = `${i * 20}ms`;
+      grid.appendChild(chip);
+    });
+
+    // スクロールを最下部に
+    grid.scrollTop = grid.scrollHeight;
+  }
+</script>
+</body>
+</html>
