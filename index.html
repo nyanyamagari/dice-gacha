@@ -221,9 +221,32 @@
       transition: all 0.2s;
     }
     .reset-btn:hover { border-color: #fff; color: #fff; }
+
+    /* 往復キャラクター */
+    .walker {
+      position: fixed;
+      bottom: 12px;
+      left: 0;
+      width: 80px;
+      height: auto;
+      pointer-events: none;
+      z-index: 100;
+      animation: walk 8s linear infinite;
+    }
+
+    @keyframes walk {
+      /* 右端からスタート → 左へ（通常向き） */
+      0%   { transform: translateX(calc(100vw - 80px)) scaleX(1); }
+      50%  { transform: translateX(0) scaleX(1); }
+      /* 左端で反転して右へ（左右反転） */
+      50.01% { transform: translateX(0) scaleX(-1); }
+      100% { transform: translateX(calc(100vw - 80px)) scaleX(-1); }
+    }
   </style>
 </head>
 <body>
+
+  <img class="walker" src="images/syam.png" alt="">
 
   <h1>HASHIRE YOINAMI GACHA</h1>
   <p class="subtitle">予算ダイスをまとめて引けるよ！♡<br>1/5/10/30回または任意の回数で引けるよ<br>ガチャを引くごとにこれまでのトータルとその回の内訳が見れるよ</p>
