@@ -227,20 +227,20 @@
       position: fixed;
       bottom: 12px;
       left: 0;
-      width: 80px;
+      width: 120px;
       height: auto;
       pointer-events: none;
       z-index: 100;
-      animation: walk 8s linear infinite;
+      animation: walk 10s linear infinite;
     }
 
     @keyframes walk {
       /* 右端からスタート → 左へ（通常向き） */
-      0%   { transform: translateX(calc(100vw - 80px)) scaleX(1); }
+      0%   { transform: translateX(calc(100vw - 120px)) scaleX(1); }
       50%  { transform: translateX(0) scaleX(1); }
       /* 左端で反転して右へ（左右反転） */
       50.01% { transform: translateX(0) scaleX(-1); }
-      100% { transform: translateX(calc(100vw - 80px)) scaleX(-1); }
+      100% { transform: translateX(calc(100vw - 120px)) scaleX(-1); }
     }
   </style>
 </head>
