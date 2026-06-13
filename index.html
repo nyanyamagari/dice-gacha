@@ -303,7 +303,6 @@
   document.getElementById('resetBtn').addEventListener('click', () => {
     allResults = [];
     document.getElementById('totalSection').style.display = 'none';
-    document.getElementById('resultsGrid').innerHTML = '';
   });
 
   function renderResults(newResults) {
@@ -328,19 +327,6 @@
         <div class="coin-sum">${(counts[c] * c).toLocaleString()}円</div>
       </div>
     `).join('');
-
-    // 結果チップ（新しい分だけ追加）
-    const grid = document.getElementById('resultsGrid');
-    newResults.forEach((v, i) => {
-      const chip = document.createElement('span');
-      chip.className = `result-chip ${COLOR_MAP[v]}`;
-      chip.textContent = `${v}円`;
-      chip.style.animationDelay = `${i * 20}ms`;
-      grid.appendChild(chip);
-    });
-
-    // スクロールを最下部に
-    grid.scrollTop = grid.scrollHeight;
   }
 </script>
 </body>
