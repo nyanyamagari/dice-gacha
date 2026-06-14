@@ -15,7 +15,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      padding: 40px 20px 80px;
     }
 
     h1 {
@@ -26,23 +26,57 @@
       background: linear-gradient(90deg, #f7d84e, #f4a833);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: none;
     }
 
     .subtitle {
       font-size: 0.85rem;
       color: #aaa;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
       letter-spacing: 2px;
+      text-align: center;
     }
 
+    /* タブ */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 4px;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 9px;
+      background: transparent;
+      color: #aaa;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(90deg, #f7d84e, #f4a833);
+      color: #1a1a2e;
+    }
+
+    .tab-content { display: none; width: 100%; max-width: 560px; }
+    .tab-content.active { display: block; }
+
+    /* カード共通 */
     .card {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 20px;
       padding: 32px;
       width: 100%;
-      max-width: 560px;
       backdrop-filter: blur(10px);
     }
 
@@ -55,17 +89,9 @@
       flex-wrap: wrap;
     }
 
-    .count-section label {
-      font-size: 0.9rem;
-      color: #ccc;
-      white-space: nowrap;
-    }
+    .count-section label { font-size: 0.9rem; color: #ccc; white-space: nowrap; }
 
-    .count-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .count-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .count-btn {
       padding: 8px 18px;
@@ -80,11 +106,7 @@
     }
 
     .count-btn:hover { background: rgba(247,216,78,0.15); }
-    .count-btn.active {
-      background: #f7d84e;
-      color: #1a1a2e;
-      border-color: #f7d84e;
-    }
+    .count-btn.active { background: #f7d84e; color: #1a1a2e; border-color: #f7d84e; }
 
     .custom-input {
       width: 70px;
@@ -114,19 +136,12 @@
       box-shadow: 0 4px 20px rgba(247,216,78,0.3);
     }
 
-    .gacha-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(247,216,78,0.5);
-    }
-
+    .gacha-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(247,216,78,0.5); }
     .gacha-btn:active { transform: translateY(0); }
     .gacha-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     /* トータル表示 */
-    .total-section {
-      margin-top: 28px;
-      display: none;
-    }
+    .total-section { margin-top: 28px; display: none; }
 
     .total-box {
       background: linear-gradient(135deg, rgba(247,216,78,0.12), rgba(244,168,51,0.08));
@@ -140,11 +155,7 @@
     }
 
     .total-label { font-size: 0.85rem; color: #ccc; }
-    .total-value {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #f7d84e;
-    }
+    .total-value { font-size: 2rem; font-weight: 800; color: #f7d84e; }
     .total-count { font-size: 0.8rem; color: #888; }
 
     /* 内訳 */
@@ -167,47 +178,6 @@
     .coin-count { font-size: 0.8rem; color: #aaa; margin-top: 2px; }
     .coin-sum { font-size: 0.9rem; color: #f7d84e; margin-top: 4px; font-weight: 600; }
 
-    /* 結果リスト */
-    .results-label {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
-
-    .results-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      max-height: 200px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .results-grid::-webkit-scrollbar { width: 4px; }
-    .results-grid::-webkit-scrollbar-track { background: transparent; }
-    .results-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
-
-    .result-chip {
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      animation: popIn 0.25s ease;
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.6); opacity: 0; }
-      to   { transform: scale(1);   opacity: 1; }
-    }
-
-    .c1   { background: #3a3a3a; color: #bbb; }
-    .c5   { background: #2d4a2d; color: #7ecb7e; }
-    .c10  { background: #2a3d5c; color: #7ab0e8; }
-    .c50  { background: #4a2d5c; color: #c07ee8; }
-    .c100 { background: #5c3a2a; color: #e8a07a; }
-    .c500 { background: #5c4a1a; color: #f7d84e; }
-
     .reset-btn {
       width: 100%;
       margin-top: 12px;
@@ -222,6 +192,193 @@
     }
     .reset-btn:hover { border-color: #fff; color: #fff; }
 
+    .save-record-btn {
+      width: 100%;
+      margin-top: 0;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 30px;
+      border: 1.5px solid rgba(247,216,78,0.5);
+      background: transparent;
+      color: #f7d84e;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .save-record-btn:hover { background: rgba(247,216,78,0.15); }
+    .save-record-btn.saved { border-color: #7ecb7e; color: #7ecb7e; }
+
+    /* ===== 記録タブ ===== */
+    .record-summary {
+      background: linear-gradient(135deg, rgba(247,216,78,0.12), rgba(244,168,51,0.08));
+      border: 1px solid rgba(247,216,78,0.3);
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .record-summary-label { font-size: 0.85rem; color: #ccc; }
+    .record-summary-value { font-size: 2rem; font-weight: 800; color: #f7d84e; }
+    .record-summary-sub { font-size: 0.8rem; color: #888; }
+
+    /* 手入力セクション */
+    .manual-section { margin-bottom: 20px; }
+    .manual-section h3 { font-size: 0.85rem; color: #aaa; letter-spacing: 1px; margin-bottom: 10px; }
+
+    .amount-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .amount-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(247,216,78,0.4);
+      background: transparent;
+      color: #f7d84e;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .amount-btn:hover { background: rgba(247,216,78,0.15); }
+    .amount-btn:active { background: rgba(247,216,78,0.3); }
+
+    .manual-input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .manual-amount-input {
+      width: 90px;
+      flex: none;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .manual-amount-input:focus { outline: none; border-color: #f7d84e; }
+
+    .manual-label-input {
+      flex: 1;
+      min-width: 0;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .manual-label-input:focus { outline: none; border-color: #f7d84e; }
+    .manual-label-input::placeholder { color: #666; }
+
+    .add-record-btn {
+      width: 60px;
+      flex: none;
+      padding: 9px 0;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(90deg, #f7d84e, #f4a833);
+      color: #1a1a2e;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: opacity 0.2s;
+    }
+    .add-record-btn:hover { opacity: 0.85; }
+
+    /* 記録リスト */
+    .record-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .record-list-title { font-size: 0.85rem; color: #aaa; letter-spacing: 1px; }
+
+    .clear-all-btn {
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,100,100,0.4);
+      background: transparent;
+      color: #ff8888;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .clear-all-btn:hover { background: rgba(255,100,100,0.15); }
+
+    .record-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .record-list::-webkit-scrollbar { width: 4px; }
+    .record-list::-webkit-scrollbar-track { background: transparent; }
+    .record-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+    .record-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 14px;
+      animation: popIn 0.2s ease;
+    }
+
+    .record-item-left { display: flex; flex-direction: column; gap: 2px; }
+    .record-item-label { font-size: 0.8rem; color: #aaa; }
+    .record-item-date { font-size: 0.72rem; color: #666; }
+    .record-item-amount { font-size: 1.1rem; font-weight: 700; color: #f7d84e; }
+
+    .record-delete-btn {
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,100,100,0.3);
+      background: transparent;
+      color: #ff8888;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .record-delete-btn:hover { background: rgba(255,100,100,0.15); }
+
+    .empty-state {
+      text-align: center;
+      color: #555;
+      font-size: 0.9rem;
+      padding: 40px 0;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .c1   { background: #3a3a3a; color: #bbb; }
+    .c5   { background: #2d4a2d; color: #7ecb7e; }
+    .c10  { background: #2a3d5c; color: #7ab0e8; }
+    .c50  { background: #4a2d5c; color: #c07ee8; }
+    .c100 { background: #5c3a2a; color: #e8a07a; }
+    .c500 { background: #5c4a1a; color: #f7d84e; }
+
     /* 往復キャラクター */
     .walker {
       position: fixed;
@@ -235,12 +392,10 @@
     }
 
     @keyframes walk {
-      /* 右端からスタート → 左へ（通常向き） */
-      0%   { transform: translateX(calc(100vw - 120px)) scaleX(1); }
-      50%  { transform: translateX(0) scaleX(1); }
-      /* 左端で反転して右へ（左右反転） */
+      0%     { transform: translateX(calc(100vw - 120px)) scaleX(1); }
+      50%    { transform: translateX(0) scaleX(1); }
       50.01% { transform: translateX(0) scaleX(-1); }
-      100% { transform: translateX(calc(100vw - 120px)) scaleX(-1); }
+      100%   { transform: translateX(calc(100vw - 120px)) scaleX(-1); }
     }
   </style>
 </head>
@@ -249,46 +404,97 @@
   <img class="walker" src="images/syam.png" alt="">
 
   <h1>HASHIRE YOINAMI GACHA</h1>
-  <p class="subtitle">予算ダイスをまとめて引けるよ！♡<br>1/5/10/30回または任意の回数で引けるよ<br>ガチャを引くごとにこれまでのトータルとその回の内訳が見れるよ</p>
+  <p class="subtitle">予算ダイスをまとめて引けるよ！♡<br>1/5/10/30回または任意の回数で引けるよ<br>ガチャを引くごとにトータルと内訳が見れるよ</p>
 
-  <div class="card">
-    <div class="count-section">
-      <label>回数：</label>
-      <div class="count-buttons">
-        <button class="count-btn active" data-count="1">1回</button>
-        <button class="count-btn" data-count="5">5回</button>
-        <button class="count-btn" data-count="10">10回</button>
-        <button class="count-btn" data-count="30">30回</button>
-      </div>
-      <input class="custom-input" type="number" id="customCount" min="1" max="1000" placeholder="任意">
-    </div>
+  <!-- タブ -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="gacha">🎲 ガチャ</button>
+    <button class="tab-btn" data-tab="record">📋 記録</button>
+  </div>
 
-    <button class="gacha-btn" id="gachaBtn">ガチャを引く</button>
-
-    <div class="total-section" id="totalSection">
-      <div class="total-box">
-        <div>
-          <div class="total-label">トータル獲得</div>
-          <div class="total-count" id="totalCount"></div>
+  <!-- ガチャタブ -->
+  <div class="tab-content active" id="tab-gacha">
+    <div class="card">
+      <div class="count-section">
+        <label>回数：</label>
+        <div class="count-buttons">
+          <button class="count-btn active" data-count="1">1回</button>
+          <button class="count-btn" data-count="5">5回</button>
+          <button class="count-btn" data-count="10">10回</button>
+          <button class="count-btn" data-count="30">30回</button>
         </div>
-        <div class="total-value" id="totalValue"></div>
+        <input class="custom-input" type="number" id="customCount" min="1" max="1000" placeholder="任意">
       </div>
 
-      <div class="results-label" id="breakdownLabel">🎯 今回の内訳</div>
-      <div class="breakdown" id="breakdown"></div>
+      <button class="gacha-btn" id="gachaBtn">ガチャを引く</button>
 
-      <button class="reset-btn" id="resetBtn">リセット</button>
+      <div class="total-section" id="totalSection">
+        <div class="total-box">
+          <div>
+            <div class="total-label">トータル獲得</div>
+            <div class="total-count" id="totalCount"></div>
+          </div>
+          <div class="total-value" id="totalValue"></div>
+        </div>
+
+        <button class="save-record-btn" id="saveRecordBtn">📋 記録する</button>
+
+        <div class="results-label" style="font-size:0.8rem;color:#888;margin-bottom:10px;letter-spacing:1px;" id="breakdownLabel">🎯 今回の内訳</div>
+        <div class="breakdown" id="breakdown"></div>
+
+        <button class="reset-btn" id="resetBtn">リセット</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 記録タブ -->
+  <div class="tab-content" id="tab-record">
+    <div class="card">
+
+      <!-- 合計表示 -->
+      <div class="record-summary">
+        <div>
+          <div class="record-summary-label">記録の合計</div>
+          <div class="record-summary-sub" id="recordTotalCount"></div>
+        </div>
+        <div class="record-summary-value" id="recordTotalValue">0 m</div>
+      </div>
+
+      <!-- 手入力セクション -->
+      <div class="manual-section">
+        <h3>＋ 記録を追加</h3>
+        <div class="amount-buttons">
+          <button class="amount-btn" data-amount="1">1m</button>
+          <button class="amount-btn" data-amount="5">5m</button>
+          <button class="amount-btn" data-amount="10">10m</button>
+          <button class="amount-btn" data-amount="50">50m</button>
+          <button class="amount-btn" data-amount="100">100m</button>
+          <button class="amount-btn" data-amount="500">500m</button>
+        </div>
+        <div class="manual-input-row">
+          <input class="manual-amount-input" type="number" id="manualAmount" min="1" placeholder="金額">
+          <input class="manual-label-input" type="text" id="manualLabel" placeholder="メモ（任意）" maxlength="30">
+          <button class="add-record-btn" id="addRecordBtn">追加</button>
+        </div>
+      </div>
+
+      <!-- リスト -->
+      <div class="record-list-header">
+        <span class="record-list-title">📜 これまでの記録</span>
+        <button class="clear-all-btn" id="clearAllBtn">全削除</button>
+      </div>
+      <div class="record-list" id="recordList"></div>
+
     </div>
   </div>
 
 <script>
+  // ===== ガチャタブ =====
   const COINS = [1, 5, 10, 50, 100, 500];
-  const COLOR_MAP = { 1:'c1', 5:'c5', 10:'c10', 50:'c50', 100:'c100', 500:'c500' };
 
   let selectedCount = 1;
   let allResults = [];
 
-  // 回数ボタン
   document.querySelectorAll('.count-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
@@ -306,51 +512,167 @@
     }
   });
 
-  // ガチャ実行
+  let lastRollTotal = 0;
+  let lastRollCount = 0;
+
   document.getElementById('gachaBtn').addEventListener('click', () => {
     const count = parseInt(document.getElementById('customCount').value) || selectedCount;
     if (!count || count < 1) return;
-
     const btn = document.getElementById('gachaBtn');
     btn.disabled = true;
-
     const newResults = Array.from({length: count}, () => COINS[Math.floor(Math.random() * COINS.length)]);
-    allResults = allResults.concat(newResults);
-
     renderResults(newResults);
-
     setTimeout(() => { btn.disabled = false; }, 300);
   });
 
-  // リセット
   document.getElementById('resetBtn').addEventListener('click', () => {
-    allResults = [];
+    lastRollTotal = 0;
+    lastRollCount = 0;
     document.getElementById('totalSection').style.display = 'none';
   });
 
+  document.getElementById('saveRecordBtn').addEventListener('click', () => {
+    if (lastRollTotal <= 0) return;
+    addRecord(lastRollTotal, `ガチャ ${lastRollCount}回`);
+    const btn = document.getElementById('saveRecordBtn');
+    btn.textContent = '✅ 記録しました';
+    btn.classList.add('saved');
+    setTimeout(() => {
+      btn.textContent = '📋 記録する';
+      btn.classList.remove('saved');
+    }, 1500);
+  });
+
   function renderResults(newResults) {
+    lastRollTotal = newResults.reduce((a, b) => a + b, 0);
+    lastRollCount = newResults.length;
     const section = document.getElementById('totalSection');
     section.style.display = 'block';
-
-    // トータル
-    const total = allResults.reduce((a, b) => a + b, 0);
-    document.getElementById('totalValue').textContent = total.toLocaleString() + ' 円';
-    document.getElementById('totalCount').textContent = `累計 ${allResults.length} 回`;
-
-    // 今回の内訳
+    document.getElementById('totalValue').textContent = lastRollTotal.toLocaleString() + ' m';
+    document.getElementById('totalCount').textContent = `今回 ${lastRollCount} 回`;
     const counts = {};
     COINS.forEach(c => counts[c] = 0);
     newResults.forEach(v => counts[v]++);
-
     const bd = document.getElementById('breakdown');
     bd.innerHTML = COINS.map(c => `
       <div class="breakdown-item">
-        <div class="coin-label">${c}円</div>
+        <div class="coin-label">${c}m</div>
         <div class="coin-count">${counts[c]}回</div>
-        <div class="coin-sum">${(counts[c] * c).toLocaleString()}円</div>
+        <div class="coin-sum">${(counts[c] * c).toLocaleString()}m</div>
       </div>
     `).join('');
   }
+
+  // ===== 記録タブ =====
+  const STORAGE_KEY = 'yoinami_records';
+
+  function loadRecords() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveRecords(records) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  }
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+
+  function renderRecords() {
+    const records = loadRecords();
+    const list = document.getElementById('recordList');
+
+    if (records.length === 0) {
+      list.innerHTML = '<div class="empty-state">まだ記録がありません</div>';
+      document.getElementById('recordTotalValue').textContent = '0 m';
+      document.getElementById('recordTotalCount').textContent = '0件';
+      return;
+    }
+
+    const total = records.reduce((a, r) => a + r.amount, 0);
+    document.getElementById('recordTotalValue').textContent = total.toLocaleString() + ' m';
+    document.getElementById('recordTotalCount').textContent = `${records.length}件`;
+
+    list.innerHTML = records.slice().reverse().map((r, revIdx) => {
+      const idx = records.length - 1 - revIdx;
+      return `
+        <div class="record-item">
+          <div class="record-item-left">
+            <div class="record-item-amount">${r.amount.toLocaleString()} m</div>
+            <div class="record-item-label">${r.label || '—'}</div>
+            <div class="record-item-date">${formatDate(r.date)}</div>
+          </div>
+          <button class="record-delete-btn" data-index="${idx}">削除</button>
+        </div>
+      `;
+    }).join('');
+
+    list.querySelectorAll('.record-delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const records = loadRecords();
+        records.splice(parseInt(btn.dataset.index), 1);
+        saveRecords(records);
+        renderRecords();
+      });
+    });
+  }
+
+  function addRecord(amount, label) {
+    if (!amount || amount <= 0) return;
+    const records = loadRecords();
+    records.push({ amount, label: label || '', date: new Date().toISOString() });
+    saveRecords(records);
+    renderRecords();
+  }
+
+  // 金額ボタン
+  document.querySelectorAll('.amount-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const label = document.getElementById('manualLabel').value.trim();
+      addRecord(parseInt(btn.dataset.amount), label);
+      document.getElementById('manualLabel').value = '';
+    });
+  });
+
+  // 手入力追加
+  document.getElementById('addRecordBtn').addEventListener('click', () => {
+    const amount = parseInt(document.getElementById('manualAmount').value);
+    const label = document.getElementById('manualLabel').value.trim();
+    if (!amount || amount <= 0) {
+      document.getElementById('manualAmount').focus();
+      return;
+    }
+    addRecord(amount, label);
+    document.getElementById('manualAmount').value = '';
+    document.getElementById('manualLabel').value = '';
+  });
+
+  document.getElementById('manualAmount').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('addRecordBtn').click();
+  });
+
+  // 全削除
+  document.getElementById('clearAllBtn').addEventListener('click', () => {
+    if (!confirm('記録をすべて削除しますか？')) return;
+    saveRecords([]);
+    renderRecords();
+  });
+
+  // ===== タブ切替 =====
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'record') renderRecords();
+    });
+  });
+
+  // 初期レンダリング
+  renderRecords();
 </script>
 </body>
 </html>
